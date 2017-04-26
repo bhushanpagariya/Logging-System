@@ -1,6 +1,5 @@
 package Redis;
 
-import Commons.TransactionDirectory;
 import Tuple.TestTuple;
 import redis.clients.jedis.Jedis;
 
@@ -9,17 +8,14 @@ import redis.clients.jedis.Jedis;
  */
 public class RedisHandler {
     Jedis jedis;
-    TransactionDirectory transactionDirectory;
     /**
      * Default constructor for RedisHandler with redis mirror at local host
-     * Get Transaction directory handler
      * Default connection Port:6379
      */
     public RedisHandler(){
         jedis = new Jedis("localhost");
         System.out.println(jedis.ping());
         System.out.println("Connection with redis successful");
-        transactionDirectory = new TransactionDirectory();
     }
 
     /**
@@ -36,13 +32,12 @@ public class RedisHandler {
      * @param tuple
      * @return 1 if successful, -1 if unsuccessful
      */
-    public int addRecord(TestTuple tuple){
+    public int addRecord(String LSN,TestTuple tuple){
         String value = tuple.getJson();
-        String reply = jedis.set(tuple.LSN,value);
+        String reply = jedis.set(LSN,value);
         if(reply.equals("OK"))
             return 1;
         return -1;
-
     }
 
     /**
@@ -54,13 +49,21 @@ public class RedisHandler {
         return jedis.get(LSN);
     }
 
-
+    public int deleteRecord(String LSN){
+        long ret = jedis.del(LSN);
+        if(ret == 1){
+            return (int)ret;
+        }
+        return -1;
+    }
 
     public static void main(String[] args){
         RedisHandler redisHandler = new RedisHandler();
         TestTuple testTuple = new TestTuple("123","234","234234");
-        redisHandler.addRecord(testTuple);
-        System.out.println(redisHandler.readRecord(testTuple.LSN));
+        TestTuple testTuple1 = new TestTuple("124","234","234234");
+        redisHandler.addRecord("123",testTuple);
+        redisHandler.addRecord("123",testTuple1);
+        System.out.println(redisHandler.readRecord("234"));
         redisHandler.jedis.close();
     }
 

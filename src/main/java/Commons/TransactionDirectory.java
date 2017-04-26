@@ -35,7 +35,17 @@ public class TransactionDirectory {
     public ArrayList<String> get(String transaction){
         if(!transactionToLSN.containsKey(transaction))
             return null;
-        return transactionToLSN.get(transaction);
+        return new ArrayList<String>(transactionToLSN.get(transaction));
     }
 
+    /**
+     * Remove given LSN from the list of the transaction
+     * @param txid
+     * @param lsn
+     */
+    public void removeLSN(String txid, String lsn) {
+        if(!transactionToLSN.containsKey(txid))
+            return;
+        transactionToLSN.get(txid).remove(lsn);
+    }
 }
