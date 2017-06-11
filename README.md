@@ -10,4 +10,7 @@ Implemented Logging System supporting different types of payload such as XML, JS
 3. DeleteLog - Delete logs satisfying user query
 4. FlushLog - Flush logs from in-memory database to persistent database. Also has support for partial flushing in case of transactional logs
 
+Example:
+
+
 Used Redis as in-memory database and MongoDB as persistent database.
