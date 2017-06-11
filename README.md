@@ -13,19 +13,19 @@ Implemented Logging System supporting different types of payload such as XML, JS
 Example:
 1. //Create an instance of the LoggingSystem class
 2. LoggingSystem logsystem = new LoggingSystem();
-3. List<Log> logList = new ArrayList<\>();
+3. List\<Log> logList = new ArrayList<\>();
 4. //Create a new Log
-5. Log log = new Log("<XML></XML>",CONSTANTS.LOG_TYPE_XML);
+5. Log log = new Log("\<XML>\</XML>",CONSTANTS.LOG_TYPE_XML);
 6. //Append to logList
 7. logList.add(log)
 8. //Write non-transactional log
-9. List<Long> lsnList = logsystem.writeLog(logList);
+9. List\<Long> lsnList = logsystem.writeLog(logList);
 10. //Flush logs
 11. logsystem.flushLog(lsnList.get(0));
 12. //Query Log
 13. QueryGen query = new QueryGen();
 14. query.append(new QuerySpec(CONSTANTS.FIELD_LSN,lsnList.get(0),QuerySpec.Operator.EQUAL);
-15. List<Log> result = logsystem.queryLog(query);
+15. List\<Log> result = logsystem.queryLog(query);
 16. //Delete Log
 17. int success = logsystem.deleteLog(query);
 
