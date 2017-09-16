@@ -11,7 +11,7 @@ Implemented Logging System supporting different types of payload such as XML, JS
 4. FlushLog - Flush logs from in-memory database to persistent database. Also has support for partial flushing in case of transactional logs
 
 Example:
-'''
+```
 //Create an instance of the LoggingSystem class
 LoggingSystem logsystem = new LoggingSystem();
 List<Log> logList = new ArrayList<>();
@@ -29,5 +29,5 @@ query.append(new QuerySpec(CONSTANTS.FIELD_LSN,lsnList.get(0),QuerySpec.Operator
 List<Log> result = logsystem.queryLog(query);
 //Delete Log
 int success = logsystem.deleteLog(query);
-'''
+```
 Used Redis as in-memory database and MongoDB as persistent database.
